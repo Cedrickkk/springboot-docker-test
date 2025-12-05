@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  app:
+    build: .
+    ports:
+      - "9090:9090"
+    networks:
+      - student-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/springboot_docker_db
+      SPRING_DATASOURCE_USERNAME: springboot_docker_user
+      SPRING_DATASOURCE_PASSWORD: admin
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: springboot_docker_user
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: springboot_docker_db
+    ports:
+      - "5433:5432"
+    networks:
+      - student-network
+
+networks:
+  student-network:
+    driver: bridge
